@@ -1,0 +1,42 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+const int N = 500;//题中给定范围
+int n, m, a = 0;//n是行，m是列
+int t[N][N];
+int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, -1, 0, 1};
+
+void dfs(int x, int y) 
+{
+	if(x < 0 || x > n + 1 || y < 0 || y > m + 1 || t[x][y]) return;//输入的边界条件，不满足即返回
+	t[x][y] = 1;
+	for(int i = 0; i < 4; i++) 
+	{
+		int a = x + dx[i], b = y + dy[i];
+		dfs(a, b);	
+	}
+}
+
+int main()
+{
+
+	cin >> n >> m;//输入行、列
+
+	for(int i = 1; i <= n; i++)
+		for(int j = 1; j <= m; j++)
+		{
+			char c;
+			cin >> c;
+			if(c == '*') t[i][j] = 1;
+			else t[i][j] = 0;
+		}
+		
+	dfs(0, 0);//搜索
+	
+	for(int i = 1; i <= n; i++) 
+		for(int j = 1; j <= m; j++)
+			if(!t[i][j]) a++;
+	
+	cout << a << endl;		
+	return 0;
+}
